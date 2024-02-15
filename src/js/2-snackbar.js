@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
+    const confirmed = confirm("Are you sure you want to submit the form?");
+    if (confirmed) {
+    form.reset();
+    };
 
     const delayInput = form.querySelector('input[name="delay"]');
     const stateInputs = form.querySelectorAll('input[name="state"]');
