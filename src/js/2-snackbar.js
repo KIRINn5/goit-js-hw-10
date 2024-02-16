@@ -6,10 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
+
     const confirmed = confirm("Are you sure you want to submit the form?");
-    if (confirmed) {
+    if (!confirmed) {
+      return; // Don't proceed if the user cancels the submission
+    }
+
     form.reset();
-    };
 
     const delayInput = form.querySelector('input[name="delay"]');
     const stateInputs = form.querySelectorAll('input[name="state"]');
@@ -29,8 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const state = selectedStateInput.value;
 
-    form.reset();
-
     const promise = new Promise((resolve, reject) => {
       if (state === 'fulfilled') {
         setTimeout(() => {
@@ -43,19 +44,21 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    try {
-      const result = await promise;
-      iziToast.success({
-        title: 'Success',
-        message: `✅ Fulfilled promise in ${result}ms`,
-        position: 'topRight',
-      });
-    } catch (error) {
-      iziToast.error({
-        title: 'Error',
-        message: `❌ Rejected promise in ${error}ms`,
-        position: 'topRight',
-      });
-    }
+    promise.then(
+      result => {
+        iziToast.success({
+          title: 'Success',
+          message: `✅ Fulfilled promise in ${result}ms`,
+          position: 'topRight',
+        });
+      },
+      error => {
+        iziToast.error({
+          title: 'Error',
+          message: `❌ Rejected promise in ${error}ms`,
+          position: 'topRight',
+        });
+      }
+    );
   });
 });
