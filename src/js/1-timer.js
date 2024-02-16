@@ -1,6 +1,9 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css'; 
+
+let startButton; 
 
 const datepicker = {
   onClose(selectedDates) {
@@ -14,13 +17,14 @@ const datepicker = {
         title: 'Error',
         message: 'Please choose a date in the future',
       });
-      startButton.disabled = true;
+      startButton.disabled = true; 
     } else {
       startButton.disabled = false;
     }
   },
   startCountdown(endTime) {
     return new Promise((resolve, reject) => {
+      let countdownInterval; 
       countdownInterval = setInterval(() => {
         const currentTime = new Date().getTime();
         const timeDifference = endTime - currentTime;
@@ -32,10 +36,10 @@ const datepicker = {
             message: 'Countdown Finished',
             position: 'topRight',
           });
-          updateInterface(0);
+          updateInterface(0); 
           resolve();
         } else {
-          updateInterface(timeDifference);
+          updateInterface(timeDifference); 
         }
       }, 1000);
     });
