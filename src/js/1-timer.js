@@ -74,7 +74,7 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-const startButton = document.querySelector('.btn-start'); 
+const startButton = document.querySelector('[data-start]'); 
 const inputTime = document.querySelector('#datetime-picker'); 
 
 inputTime.addEventListener('change', () => { 
@@ -87,7 +87,6 @@ inputTime.addEventListener('change', () => {
     startButton.disabled = true;
   }
 });
-
 
 startButton.disabled = true;
 
